@@ -1,0 +1,134 @@
+<htmL>
+    <head>
+        <link rel="stylesheet" href="css/controllers/cube.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <script>
+            function Hellow() {
+            jQuery.ajax({
+                'url' : 'cube/controls',
+                'type' : 'POST',
+                'contentType': 'application/json',
+                'data' : JSON.stringify({
+                    'direction': 'L'
+                }),
+                'success' : function(data) {
+                    console.log(data);
+                },
+                'error' : function(request,error)
+                {
+                    console.log(error)
+                    alert("Request: "+JSON.stringify(request));
+                }
+            });
+        }
+        </script>
+
+        <div class="cubeBody">
+            <div id="controls" class="controls">
+                <button type="button" class="controlButton" onclick="Hellow()">L</button>
+                <button type="button" class="controlButton">L`</button>
+                <button type="button" class="controlButton">R</button>
+                <button type="button" class="controlButton">R`</button>
+                <button type="button" class="controlButton">M</button>
+                <button type="button" class="controlButton">M`</button>
+                <button type="button" class="controlButton">U</button>
+                <button type="button" class="controlButton">U`</button>
+                <button type="button" class="controlButton">E</button>
+                <button type="button" class="controlButton">E`</button>
+                <button type="button" class="controlButton">D</button>
+                <button type="button" class="controlButton">D`</button>
+                <button type="button" class="controlButton">F</button>
+                <button type="button" class="controlButton">F`</button>
+                <button type="button" class="controlButton">C</button>
+                <button type="button" class="controlButton">C`</button>
+                <button type="button" class="controlButton">B</button>
+                <button type="button" class="controlButton">B`</button>
+            </div>
+            <div id="cube" class="cube">
+                <!-- empty box -->
+                <div></div>
+                <div id="yellow" class="cubeSide">
+                    <div id="yellow1" class="cubeBox yellowBox"></div>
+                    <div id="yellow2" class="cubeBox yellowBox"></div>
+                    <div id="yellow3" class="cubeBox yellowBox"></div>
+                    <div id="yellow4" class="cubeBox yellowBox"></div>
+                    <div id="yellow5" class="cubeBox yellowBox"></div>
+                    <div id="yellow6" class="cubeBox yellowBox"></div>
+                    <div id="yellow7" class="cubeBox yellowBox"></div>
+                    <div id="yellow8" class="cubeBox yellowBox"></div>
+                    <div id="yellow9" class="cubeBox yellowBox"></div>
+                </div>
+                <!-- empty box -->
+                <div></div>
+                <!-- empty box -->
+                <div></div>
+
+                <div id="blue" class="cubeSide">
+                    <div id="blue1" class="cubeBox blueBox"></div>
+                    <div id="blue2" class="cubeBox blueBox"></div>
+                    <div id="blue3" class="cubeBox blueBox"></div>
+                    <div id="blue4" class="cubeBox blueBox"></div>
+                    <div id="blue5" class="cubeBox blueBox"></div>
+                    <div id="blue6" class="cubeBox blueBox"></div>
+                    <div id="blue7" class="cubeBox blueBox"></div>
+                    <div id="blue8" class="cubeBox blueBox"></div>
+                    <div id="blue9" class="cubeBox blueBox"></div>
+                </div>
+                <!-- empty box -->
+                <div></div>
+                <div id="orange" class="cubeSide">
+                    <div id="orange1" class="cubeBox orangeBox"></div>
+                    <div id="orange2" class="cubeBox orangeBox"></div>
+                    <div id="orange3" class="cubeBox orangeBox"></div>
+                    <div id="orange4" class="cubeBox orangeBox"></div>
+                    <div id="orange5" class="cubeBox orangeBox"></div>
+                    <div id="orange6" class="cubeBox orangeBox"></div>
+                    <div id="orange7" class="cubeBox orangeBox"></div>
+                    <div id="orange8" class="cubeBox orangeBox"></div>
+                    <div id="orange9" class="cubeBox orangeBox"></div>
+                </div>
+
+                <div id="white" class="cubeSide">
+                    <div id="white1" class="cubeBox whiteBox"></div>
+                    <div id="white2" class="cubeBox whiteBox"></div>
+                    <div id="white3" class="cubeBox whiteBox"></div>
+                    <div id="white4" class="cubeBox whiteBox"></div>
+                    <div id="white5" class="cubeBox whiteBox"></div>
+                    <div id="white6" class="cubeBox whiteBox"></div>
+                    <div id="white7" class="cubeBox whiteBox"></div>
+                    <div id="white8" class="cubeBox whiteBox"></div>
+                    <div id="white9" class="cubeBox whiteBox"></div>
+                </div>
+
+                <div id="red" class="cubeSide">
+                    <div id="red1" class="cubeBox redBox"></div>
+                    <div id="red2" class="cubeBox redBox"></div>
+                    <div id="red3" class="cubeBox redBox"></div>
+                    <div id="red4" class="cubeBox redBox"></div>
+                    <div id="red5" class="cubeBox redBox"></div>
+                    <div id="red6" class="cubeBox redBox"></div>
+                    <div id="red7" class="cubeBox redBox"></div>
+                    <div id="red8" class="cubeBox redBox"></div>
+                    <div id="red9" class="cubeBox redBox"></div>
+                </div>
+                <!-- empty box -->
+                <div></div>
+                <div id="green" class="cubeSide">
+                    <div id="green1" class="cubeBox greenBox"></div>
+                    <div id="green2" class="cubeBox greenBox"></div>
+                    <div id="green3" class="cubeBox greenBox"></div>
+                    <div id="green4" class="cubeBox greenBox"></div>
+                    <div id="green5" class="cubeBox greenBox"></div>
+                    <div id="green6" class="cubeBox greenBox"></div>
+                    <div id="green7" class="cubeBox greenBox"></div>
+                    <div id="green8" class="cubeBox greenBox"></div>
+                    <div id="green9" class="cubeBox greenBox"></div>
+                </div>
+                <!-- empty box -->
+                <div></div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+body {
+    margin: 0
+}
+
+.cubeBody {
+    background-color: gray;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.cube {
+    flex: 1;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: [left] 12vw [middle] 12vw [right] 12vw;
+    grid-template-rows: [first] 12vw [second] 12vw [third] 12vw [fourth] 12vw;
+}
+
+.controls {
+    width: 25%;
+}
+
+.cubeSide {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: [left] 4vw [middle] 4vw [right] 4vw;
+    grid-template-rows: [top] 4vw [center] 4vw [bottom] 4vw;
+}
+
+.cubeBox {
+    border: 1px solid black;
+}
+
+.controlButton {
+    aspect-ratio : 1 / 1;
+    width: 32%;
+}
+
+.redBox {
+    background-color: red;
+}
+
+.greenBox {
+    background-color: green;
+}
+
+.blueBox {
+    background-color: blue;
+}
+
+.yellowBox {
+    background-color: yellow;
+}
+
+.whiteBox {
+    background-color: white;
+}
+
+.orangeBox {
+    background-color: orange;
+}
