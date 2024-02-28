@@ -9,6 +9,10 @@ end
 route("/cube", UIsController.buildCube)
 
 route("/cube/controls", method=POST) do
+
+  direction = params(:direction, "")
+
+  print(direction)
   
   solvedCube = [
     [11 12 13
@@ -30,6 +34,7 @@ route("/cube/controls", method=POST) do
      64 65 66
      67 68 69],
 ]
+    adjustedCube = RubiksControls.mapDirection(direction)(solvedCube)
     message = jsonpayload()
-    ("response" => RubiksControls.labelCube(solvedCube)) |> json
+    ("response" => RubiksControls.labelCube(adjustedCube)) |> json
 end

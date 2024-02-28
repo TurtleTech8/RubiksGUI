@@ -26,27 +26,6 @@ solvedCube = [
      67 68 69],
 ]
 
-cube3 = [
-    [11 12 13
-     14 15 16
-     17 18 19],
-    [21 22 23
-     24 25 26
-     27 28 29],
-    [31 32 33 
-     34 35 36
-     37 38 39],
-    [41 42 43
-     44 45 46
-     47 48 49],
-    [51 52 53
-     54 55 56
-     57 58 59],
-    [61 62 63
-     64 65 66
-     67 68 69],
-]
-
 sideLabels = Dict(
     1=>"white",
     2=>"blue",
@@ -55,6 +34,8 @@ sideLabels = Dict(
     5=>"orange",
     6=>"red"
 )
+
+
 
 function labelCube(c)
     labeledCube = Dict{String,Any}()
@@ -98,6 +79,12 @@ function prettyPrintCube(cube)
     println(' ')
 end
 
+function R(c)
+    temp = deepcopy(c)
+    R!(temp)
+    return temp
+end
+
 function R!(c)
     temp = deepcopy(c)
 
@@ -128,6 +115,12 @@ function R!(c)
     c[6][3, 1] = temp[6][3, 3]
     c[6][3, 2] = temp[6][2, 3]
     c[6][3, 3] = temp[6][1, 3]
+end
+
+function RPrime(c)
+    temp = deepcopy(c)
+    RPrime!(temp)
+    return temp
 end
 
 function RPrime!(c)
@@ -162,6 +155,12 @@ function RPrime!(c)
     c[6][3, 3] = temp[6][3, 1]
 end
 
+function L(c)
+    temp = deepcopy(c)
+    L!(temp)
+    return temp
+end
+
 function L!(c)
     temp = deepcopy(c)
 
@@ -192,6 +191,12 @@ function L!(c)
     c[5][3, 1] = temp[5][3, 3]
     c[5][3, 2] = temp[5][2, 3]
     c[5][3, 3] = temp[5][1, 3]
+end
+
+function LPrime(c)
+    temp = deepcopy(c)
+    LPrime!(temp)
+    return temp
 end
 
 function LPrime!(c)
@@ -226,6 +231,12 @@ function LPrime!(c)
     c[5][3, 3] = temp[5][3, 1]
 end
 
+function B(c)
+    temp = deepcopy(c)
+    B!(temp)
+    return temp
+end
+
 function B!(c)
     temp = deepcopy(c)
 
@@ -256,6 +267,12 @@ function B!(c)
     c[3][3, 1] = temp[3][3, 3]
     c[3][3, 2] = temp[3][2, 3]
     c[3][3, 3] = temp[3][1, 3]
+end
+
+function BPrime(c)
+    temp = deepcopy(c)
+    BPrime!(temp)
+    return temp
 end
 
 function BPrime!(c)
@@ -290,6 +307,12 @@ function BPrime!(c)
     c[3][3, 3] = temp[3][3, 1]
 end
 
+function F(c)
+    temp = deepcopy(c)
+    F!(temp)
+    return temp
+end
+
 function F!(c)
     temp = deepcopy(c)
 
@@ -320,6 +343,12 @@ function F!(c)
     c[1][3, 1] = temp[1][3, 3]
     c[1][3, 2] = temp[1][2, 3]
     c[1][3, 3] = temp[1][1, 3]
+end
+
+function FPrime(c)
+    temp = deepcopy(c)
+    FPrime!(temp)
+    return temp
 end
 
 function FPrime!(c)
@@ -354,36 +383,48 @@ function FPrime!(c)
     c[1][3, 3] = temp[1][3, 1]
 end
 
+function U(c)
+    temp = deepcopy(c)
+    U!(temp)
+    return temp
+end
+
 function U!(c)
     temp = deepcopy(c)
 
     # Rotate the top column
-    c[1][1, 1] = temp[6][1, 1]
-    c[1][1, 2] = temp[6][1, 2]
-    c[1][1, 3] = temp[6][1, 3]
+    c[4][1, 1] = temp[6][1, 1]
+    c[4][1, 2] = temp[6][2, 1]
+    c[4][1, 3] = temp[6][3, 1]
 
-    c[5][1, 1] = temp[1][1, 1]
-    c[5][1, 2] = temp[1][1, 2]
-    c[5][1, 3] = temp[1][1, 3]
+    c[5][1, 3] = temp[4][1, 1]
+    c[5][2, 3] = temp[4][1, 2]
+    c[5][3, 3] = temp[4][1, 3]
 
-    c[3][3, 1] = temp[5][1, 3]
-    c[3][3, 2] = temp[5][1, 2]
-    c[3][3, 3] = temp[5][1, 1]
+    c[2][3, 1] = temp[5][3, 3]
+    c[2][3, 2] = temp[5][2, 3]
+    c[2][3, 3] = temp[5][1, 3]
 
-    c[6][1, 1] = temp[3][3, 3]
-    c[6][1, 2] = temp[3][3, 2]
-    c[6][1, 3] = temp[3][3, 1]
+    c[6][1, 1] = temp[2][3, 1]
+    c[6][2, 1] = temp[2][3, 2]
+    c[6][3, 1] = temp[2][3, 3]
 
     # Rotate the front top clockwise
-    c[2][1, 1] = temp[2][3, 1]
-    c[2][1, 2] = temp[2][2, 1]
-    c[2][1, 3] = temp[2][1, 1]
-    c[2][2, 1] = temp[2][3, 2]
-    c[2][2, 2] = temp[2][2, 2]
-    c[2][2, 3] = temp[2][1, 2]
-    c[2][3, 1] = temp[2][3, 3]
-    c[2][3, 2] = temp[2][2, 3]
-    c[2][3, 3] = temp[2][1, 3]
+    c[1][1, 1] = temp[1][3, 1]
+    c[1][1, 2] = temp[1][2, 1]
+    c[1][1, 3] = temp[1][1, 1]
+    c[1][2, 1] = temp[1][3, 2]
+    c[1][2, 2] = temp[1][2, 2]
+    c[1][2, 3] = temp[1][1, 2]
+    c[1][3, 1] = temp[1][3, 3]
+    c[1][3, 2] = temp[1][2, 3]
+    c[1][3, 3] = temp[1][1, 3]
+end
+
+function UPrime(c)
+    temp = deepcopy(c)
+    UPrime!(temp)
+    return temp
 end
 
 function UPrime!(c)
@@ -418,6 +459,12 @@ function UPrime!(c)
     c[2][3, 3] = temp[2][3, 1]
 end
 
+function D(c)
+    temp = deepcopy(c)
+    D!(temp)
+    return temp
+end
+
 function D!(c)
     temp = deepcopy(c)
 
@@ -450,6 +497,12 @@ function D!(c)
     c[4][3, 3] = temp[4][1, 3]
 end
 
+function DPrime(c)
+    temp = deepcopy(c)
+    DPrime!(temp)
+    return temp
+end
+
 function DPrime!(c)
     temp = deepcopy(c)
 
@@ -480,6 +533,31 @@ function DPrime!(c)
     c[4][3, 1] = temp[4][1, 1]
     c[4][3, 2] = temp[4][2, 1]
     c[4][3, 3] = temp[4][3, 1]
+end
+
+directionMapping = Dict{String, Function}(
+    "L"  => L,
+    "L`" => LPrime,
+    "R"  => R,
+    "R`" => RPrime,
+    # "M"  => M,
+    # "M`" => MPrime,
+    "U"  => U,
+    "U`" => UPrime,
+    # "E"  => E,
+    # "E`" => EPrime,
+    "D"  => D,
+    "D`" => DPrime,
+    "F"  => F,
+    "F`" => FPrime,
+    # "C"  => C,
+    # "C`" => CPrime,
+    "B"  => B,
+    "B`" => BPrime
+)
+
+function mapDirection(direction)
+    return directionMapping[direction]
 end
 
 function percentSolved(c) 
@@ -565,16 +643,4 @@ end
 #     end
 # end
 
-
-# prettyPrintCube(cube3)
-# mixCube!(cube3, 20)
-# solveCube!(cube3, 100)
-#prettyPrintCube(cube3)
-
-# CSV.write("D:\\repos\\Rubiks\\Solve2.csv", Memory)
-
-# println(cube)
-# println(typeof(cube))
-# println(cube[1])
-# println(typeof(cube[1]))
 end
