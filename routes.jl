@@ -10,7 +10,11 @@ route("/") do
   serve_static_file("welcome.html")
 end
 
-route("/cube", UIsController.buildCube)
+route("/cube") do
+  s = session()
+  
+  UIsController.buildCube()
+end
 
 route("/cube/turnCube", method=POST) do
   s = session()

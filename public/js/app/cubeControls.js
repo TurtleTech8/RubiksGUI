@@ -38,6 +38,14 @@ function hideDirectionIndicator() {
     x.removeClass("mirror")
 }
 
+function remapCube(data) {
+    fillSide('top', data.top)
+    fillSide('back', data.back)
+    fillSide('bottom', data.bottom)
+    fillSide('front', data.front)
+    fillSide('left', data.left)
+    fillSide('right', data.right)
+}
 
 function turnCube() {
     $.ajax({
@@ -45,14 +53,7 @@ function turnCube() {
         type : 'POST',
         data : {direction: this.innerHTML},
         success : function(data) {
-            console.log(data)
-            cube = data.response
-            fillSide('white', data.response.white)
-            fillSide('blue', data.response.blue)
-            fillSide('yellow', data.response.yellow)
-            fillSide('green', data.response.green)
-            fillSide('orange', data.response.orange)
-            fillSide('red', data.response.red)
+            remapCube(data.response)
         },
         error : function(request,error)
         {
@@ -67,14 +68,7 @@ function resetCube() {
         url : 'cube/resetCube',
         type : 'POST',
         success : function(data) {
-            console.log(data)
-            cube=data.response
-            fillSide('white', data.response.white)
-            fillSide('blue', data.response.blue)
-            fillSide('yellow', data.response.yellow)
-            fillSide('green', data.response.green)
-            fillSide('orange', data.response.orange)
-            fillSide('red', data.response.red)
+            remapCube(data.response)
         },
         error : function(request,error)
         {
@@ -89,14 +83,7 @@ function mixCube() {
         url : 'cube/mixCube',
         type : 'POST',
         success : function(data) {
-            console.log(data)
-            cube=data.response
-            fillSide('white', data.response.white)
-            fillSide('blue', data.response.blue)
-            fillSide('yellow', data.response.yellow)
-            fillSide('green', data.response.green)
-            fillSide('orange', data.response.orange)
-            fillSide('red', data.response.red)
+            remapCube(data.response)
         },
         error : function(request,error)
         {
@@ -107,10 +94,8 @@ function mixCube() {
 }
 
 function fillSide(side, faces) {
-    // faceElements = $(`[id^=${side}][data-face]`)
-    // console.log(faceElements)
+
     for(x=0; x < faces.length; x++) {
-        // console.log(faces[x])
         idSelector = x + 1
         colorSelector = Math.floor(faces[x] / 10)
         faceElement = $(`[id=${side}${idSelector}][data-face]`)
@@ -118,6 +103,5 @@ function fillSide(side, faces) {
         faceElement.attr("data-face", faces[x])
         // faceElement.text(faces[x])
         faceElement.removeClass(colorCSSSelector[oldColorSelector]).addClass(colorCSSSelector[colorSelector])
-        // console.log(faceElement)
     }
 }
