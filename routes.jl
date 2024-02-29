@@ -1,6 +1,10 @@
-using Genie.Router, Genie.Renderer.Json, Genie.Requests
+using Genie.Router, Genie.Renderer.Json, Genie.Requests, GenieSession, GenieSessionFileSession
 using RubiksGUI.UIsController
 using RubiksGUI.RubiksControls
+
+GenieSession.__init__()
+
+
 
 route("/") do
   serve_static_file("welcome.html")
@@ -8,33 +12,23 @@ end
 
 route("/cube", UIsController.buildCube)
 
-route("/cube/controls", method=POST) do
-
+route("/cube/turnCube", method=POST) do
+  s = session()
   direction = params(:direction, "")
+  GenieSession.set!(s, :currentCube, RubiksControls.mapDirection(direction)(s.data[:currentCube]))
+  println(s.data[:currentCube])
+  ("response" => RubiksControls.labelCube(s.data[:currentCube])) |> json
+end
 
-  print(direction)
-  
-  solvedCube = [
-    [11 12 13
-     14 15 16
-     17 18 19],
-    [21 22 23
-     24 25 26
-     27 28 29],
-    [31 32 33 
-     34 35 36
-     37 38 39],
-    [41 42 43
-     44 45 46
-     47 48 49],
-    [51 52 53
-     54 55 56
-     57 58 59],
-    [61 62 63
-     64 65 66
-     67 68 69],
-]
-    adjustedCube = RubiksControls.mapDirection(direction)(solvedCube)
-    message = jsonpayload()
-    ("response" => RubiksControls.labelCube(adjustedCube)) |> json
+route("/cube/resetCube", method=POST) do
+  s = session()
+  GenieSession.set!(s, :currentCube, RubiksControls.getSolvedCube())
+  println(s.data[:currentCube])
+  ("response" => RubiksControls.labelCube(s.data[:currentCube])) |> json
+end
+
+route("/cube/mixCube", method=POST) do 
+  s = session()
+  GenieSession.set!(s, :currentCube, RubiksControls.mixCube(s.data[:currentCube], 35))
+  ("response" => RubiksControls.labelCube(s.data[:currentCube])) |> json
 end

@@ -5,6 +5,7 @@ module RubiksControls
 # # 1 = W; 2 = B; 3 = R; 4 = O; 5 = G; 6 = Y;
 # Memory = DataFrame(step=Int[], move=Int[], psolve=Int[], result = Vector{Matrix{Int64}}[])
 
+
 solvedCube = [
     [11 12 13
      14 15 16
@@ -35,7 +36,9 @@ sideLabels = Dict(
     6=>"red"
 )
 
-
+function getSolvedCube()
+    return deepcopy(solvedCube)
+end
 
 function labelCube(c)
     labeledCube = Dict{String,Any}()
@@ -241,32 +244,32 @@ function B!(c)
     temp = deepcopy(c)
 
     # Rotate the back column
-    c[6][1, 3] = temp[4][3, 3]
-    c[6][2, 3] = temp[4][3, 2]
-    c[6][3, 3] = temp[4][3, 1]
+    c[6][1, 1] = temp[3][3, 3]
+    c[6][1, 2] = temp[3][3, 2]
+    c[6][1, 3] = temp[3][3, 1]
 
-    c[2][1, 1] = temp[6][1, 3]
-    c[2][1, 2] = temp[6][2, 3]
-    c[2][1, 3] = temp[6][3, 3]
+    c[1][1, 1] = temp[6][1, 1]
+    c[1][1, 2] = temp[6][1, 2]
+    c[1][1, 3] = temp[6][1, 3]
 
-    c[5][1, 1] = temp[2][1, 3]
-    c[5][2, 1] = temp[2][1, 2]
-    c[5][3, 1] = temp[2][1, 1]
+    c[5][1, 1] = temp[1][1, 1]
+    c[5][1, 2] = temp[1][1, 2]
+    c[5][1, 3] = temp[1][1, 3]
 
-    c[4][3, 1] = temp[5][1, 1]
-    c[4][3, 2] = temp[5][2, 1]
-    c[4][3, 3] = temp[5][3, 1]
+    c[3][3, 1] = temp[5][1, 3]
+    c[3][3, 2] = temp[5][1, 2]
+    c[3][3, 3] = temp[5][1, 1]
 
     # Rotate the back face clockwise
-    c[3][1, 1] = temp[3][3, 1]
-    c[3][1, 2] = temp[3][2, 1]
-    c[3][1, 3] = temp[3][1, 1]
-    c[3][2, 1] = temp[3][3, 2]
-    c[3][2, 2] = temp[3][2, 2]
-    c[3][2, 3] = temp[3][1, 2]
-    c[3][3, 1] = temp[3][3, 3]
-    c[3][3, 2] = temp[3][2, 3]
-    c[3][3, 3] = temp[3][1, 3]
+    c[2][1, 1] = temp[2][3, 1]
+    c[2][1, 2] = temp[2][2, 1]
+    c[2][1, 3] = temp[2][1, 1]
+    c[2][2, 1] = temp[2][3, 2]
+    c[2][2, 2] = temp[2][2, 2]
+    c[2][2, 3] = temp[2][1, 2]
+    c[2][3, 1] = temp[2][3, 3]
+    c[2][3, 2] = temp[2][2, 3]
+    c[2][3, 3] = temp[2][1, 3]
 end
 
 function BPrime(c)
@@ -279,32 +282,32 @@ function BPrime!(c)
     temp = deepcopy(c)
 
     # Rotate the back column
-    c[6][1, 3] = temp[2][1, 1]
-    c[6][2, 3] = temp[2][1, 2]
-    c[6][3, 3] = temp[2][1, 3]
+    c[6][1, 1] = temp[1][1, 1]
+    c[6][1, 2] = temp[1][1, 2]
+    c[6][1, 3] = temp[1][1, 3]
 
-    c[2][1, 1] = temp[5][3, 1]
-    c[2][1, 2] = temp[5][2, 1]
-    c[2][1, 3] = temp[5][1, 1]
+    c[1][1, 1] = temp[5][1, 1]
+    c[1][1, 2] = temp[5][1, 2]
+    c[1][1, 3] = temp[5][1, 3]
 
-    c[5][1, 1] = temp[4][3, 1]
-    c[5][2, 1] = temp[4][3, 2]
-    c[5][3, 1] = temp[4][3, 3]
+    c[5][1, 1] = temp[3][3, 3]
+    c[5][1, 2] = temp[3][3, 2]
+    c[5][1, 3] = temp[3][3, 1]
 
-    c[4][3, 1] = temp[6][3, 3]
-    c[4][3, 2] = temp[6][2, 3]
-    c[4][3, 3] = temp[6][1, 3]
+    c[3][3, 1] = temp[6][1, 3]
+    c[3][3, 2] = temp[6][1, 2]
+    c[3][3, 3] = temp[6][1, 1]
 
     #Rotate the back face counter clockwise
-    c[3][1, 1] = temp[3][1, 3]
-    c[3][1, 2] = temp[3][2, 3]
-    c[3][1, 3] = temp[3][3, 3]
-    c[3][2, 1] = temp[3][1, 2]
-    c[3][2, 2] = temp[3][2, 2]
-    c[3][2, 3] = temp[3][3, 2]
-    c[3][3, 1] = temp[3][1, 1]
-    c[3][3, 2] = temp[3][2, 1]
-    c[3][3, 3] = temp[3][3, 1]
+    c[2][1, 1] = temp[2][1, 3]
+    c[2][1, 2] = temp[2][2, 3]
+    c[2][1, 3] = temp[2][3, 3]
+    c[2][2, 1] = temp[2][1, 2]
+    c[2][2, 2] = temp[2][2, 2]
+    c[2][2, 3] = temp[2][3, 2]
+    c[2][3, 1] = temp[2][1, 1]
+    c[2][3, 2] = temp[2][2, 1]
+    c[2][3, 3] = temp[2][3, 1]
 end
 
 function F(c)
@@ -317,32 +320,32 @@ function F!(c)
     temp = deepcopy(c)
 
     # Rotate the front column
-    c[6][1, 1] = temp[2][3, 1]
-    c[6][2, 1] = temp[2][3, 2]
-    c[6][3, 1] = temp[2][3, 3]
+    c[6][3, 1] = temp[1][3, 1]
+    c[6][3, 2] = temp[1][3, 2]
+    c[6][3, 3] = temp[1][3, 3]
 
-    c[2][3, 1] = temp[5][3, 3]
-    c[2][3, 2] = temp[5][2, 3]
-    c[2][3, 3] = temp[5][1, 3]
+    c[1][3, 1] = temp[5][3, 1]
+    c[1][3, 2] = temp[5][3, 2]
+    c[1][3, 3] = temp[5][3, 3]
 
-    c[5][1, 3] = temp[4][1, 1]
-    c[5][2, 3] = temp[4][1, 2]
-    c[5][3, 3] = temp[4][1, 3]
+    c[5][3, 1] = temp[3][1, 3]
+    c[5][3, 2] = temp[3][1, 2]
+    c[5][3, 3] = temp[3][1, 1]
 
-    c[4][1, 1] = temp[6][3, 1]
-    c[4][1, 2] = temp[6][2, 1]
-    c[4][1, 3] = temp[6][1, 1]
+    c[3][1, 1] = temp[6][3, 3]
+    c[3][1, 2] = temp[6][3, 2]
+    c[3][1, 3] = temp[6][3, 1]
 
     # Rotate the front face clockwise
-    c[1][1, 1] = temp[1][3, 1]
-    c[1][1, 2] = temp[1][2, 1]
-    c[1][1, 3] = temp[1][1, 1]
-    c[1][2, 1] = temp[1][3, 2]
-    c[1][2, 2] = temp[1][2, 2]
-    c[1][2, 3] = temp[1][1, 2]
-    c[1][3, 1] = temp[1][3, 3]
-    c[1][3, 2] = temp[1][2, 3]
-    c[1][3, 3] = temp[1][1, 3]
+    c[4][1, 1] = temp[4][3, 1]
+    c[4][1, 2] = temp[4][2, 1]
+    c[4][1, 3] = temp[4][1, 1]
+    c[4][2, 1] = temp[4][3, 2]
+    c[4][2, 2] = temp[4][2, 2]
+    c[4][2, 3] = temp[4][1, 2]
+    c[4][3, 1] = temp[4][3, 3]
+    c[4][3, 2] = temp[4][2, 3]
+    c[4][3, 3] = temp[4][1, 3]
 end
 
 function FPrime(c)
@@ -355,32 +358,32 @@ function FPrime!(c)
     temp = deepcopy(c)
 
     # Rotate the front column
-    c[6][1, 1] = temp[4][1, 3]
-    c[6][2, 1] = temp[4][1, 2]
-    c[6][3, 1] = temp[4][1, 1]
+    c[6][3, 1] = temp[3][1, 3]
+    c[6][3, 2] = temp[3][1, 2]
+    c[6][3, 3] = temp[3][1, 1]
 
-    c[2][3, 1] = temp[6][1, 1]
-    c[2][3, 2] = temp[6][2, 1]
-    c[2][3, 3] = temp[6][3, 1]
+    c[1][3, 1] = temp[6][3, 1]
+    c[1][3, 2] = temp[6][3, 2]
+    c[1][3, 3] = temp[6][3, 3]
 
-    c[5][1, 3] = temp[2][3, 3]
-    c[5][2, 3] = temp[2][3, 2]
-    c[5][3, 3] = temp[2][3, 1]
+    c[5][3, 1] = temp[1][3, 1]
+    c[5][3, 2] = temp[1][3, 2]
+    c[5][3, 3] = temp[1][3, 3]
 
-    c[4][1, 1] = temp[5][1, 3]
-    c[4][1, 2] = temp[5][2, 3]
-    c[4][1, 3] = temp[5][3, 3]
+    c[3][1, 1] = temp[5][3, 3]
+    c[3][1, 2] = temp[5][3, 2]
+    c[3][1, 3] = temp[5][3, 1]
 
     #Rotate the front face counter clockwise
-    c[1][1, 1] = temp[1][1, 3]
-    c[1][1, 2] = temp[1][2, 3]
-    c[1][1, 3] = temp[1][3, 3]
-    c[1][2, 1] = temp[1][1, 2]
-    c[1][2, 2] = temp[1][2, 2]
-    c[1][2, 3] = temp[1][3, 2]
-    c[1][3, 1] = temp[1][1, 1]
-    c[1][3, 2] = temp[1][2, 1]
-    c[1][3, 3] = temp[1][3, 1]
+    c[4][1, 1] = temp[4][1, 3]
+    c[4][1, 2] = temp[4][2, 3]
+    c[4][1, 3] = temp[4][3, 3]
+    c[4][2, 1] = temp[4][1, 2]
+    c[4][2, 2] = temp[4][2, 2]
+    c[4][2, 3] = temp[4][3, 2]
+    c[4][3, 1] = temp[4][1, 1]
+    c[4][3, 2] = temp[4][2, 1]
+    c[4][3, 3] = temp[4][3, 1]
 end
 
 function U(c)
@@ -393,9 +396,9 @@ function U!(c)
     temp = deepcopy(c)
 
     # Rotate the top column
-    c[4][1, 1] = temp[6][1, 1]
+    c[4][1, 1] = temp[6][3, 1]
     c[4][1, 2] = temp[6][2, 1]
-    c[4][1, 3] = temp[6][3, 1]
+    c[4][1, 3] = temp[6][1, 1]
 
     c[5][1, 3] = temp[4][1, 1]
     c[5][2, 3] = temp[4][1, 2]
@@ -431,32 +434,32 @@ function UPrime!(c)
     temp = deepcopy(c)
 
     # Rotate the front column
-    c[1][1, 1] = temp[5][1, 1]
-    c[1][1, 2] = temp[5][1, 2]
-    c[1][1, 3] = temp[5][1, 3]
+    c[4][1, 1] = temp[5][1, 3]
+    c[4][1, 2] = temp[5][2, 3]
+    c[4][1, 3] = temp[5][3, 3]
 
-    c[5][1, 1] = temp[3][3, 3]
-    c[5][1, 2] = temp[3][3, 2]
-    c[5][1, 3] = temp[3][3, 1]
+    c[5][1, 3] = temp[2][3, 3]
+    c[5][2, 3] = temp[2][3, 2]
+    c[5][3, 3] = temp[2][3, 1]
 
-    c[3][3, 1] = temp[6][1, 3]
-    c[3][3, 2] = temp[6][1, 2]
-    c[3][3, 3] = temp[6][1, 1]
+    c[2][3, 1] = temp[6][1, 1]
+    c[2][3, 2] = temp[6][2, 1]
+    c[2][3, 3] = temp[6][3, 1]
 
-    c[6][1, 1] = temp[1][1, 1]
-    c[6][1, 2] = temp[1][1, 2]
-    c[6][1, 3] = temp[1][1, 3]
+    c[6][1, 1] = temp[4][1, 3]
+    c[6][2, 1] = temp[4][1, 2]
+    c[6][3, 1] = temp[4][1, 1]
 
     #Rotate the top face counter clockwise
-    c[2][1, 1] = temp[2][1, 3]
-    c[2][1, 2] = temp[2][2, 3]
-    c[2][1, 3] = temp[2][3, 3]
-    c[2][2, 1] = temp[2][1, 2]
-    c[2][2, 2] = temp[2][2, 2]
-    c[2][2, 3] = temp[2][3, 2]
-    c[2][3, 1] = temp[2][1, 1]
-    c[2][3, 2] = temp[2][2, 1]
-    c[2][3, 3] = temp[2][3, 1]
+    c[1][1, 1] = temp[1][1, 3]
+    c[1][1, 2] = temp[1][2, 3]
+    c[1][1, 3] = temp[1][3, 3]
+    c[1][2, 1] = temp[1][1, 2]
+    c[1][2, 2] = temp[1][2, 2]
+    c[1][2, 3] = temp[1][3, 2]
+    c[1][3, 1] = temp[1][1, 1]
+    c[1][3, 2] = temp[1][2, 1]
+    c[1][3, 3] = temp[1][3, 1]
 end
 
 function D(c)
@@ -469,32 +472,32 @@ function D!(c)
     temp = deepcopy(c)
 
     # Rotate the bottom column
-    c[1][3, 1] = temp[5][3, 1]
-    c[1][3, 2] = temp[5][3, 2]
-    c[1][3, 3] = temp[5][3, 3]
+    c[4][3, 1] = temp[5][1, 1]
+    c[4][3, 2] = temp[5][2, 1]
+    c[4][3, 3] = temp[5][3, 1]
 
-    c[5][3, 1] = temp[3][1, 3]
-    c[5][3, 2] = temp[3][1, 2]
-    c[5][3, 3] = temp[3][1, 1]
+    c[5][1, 1] = temp[2][1, 3]
+    c[5][2, 1] = temp[2][1, 2]
+    c[5][3, 1] = temp[2][1, 1]
 
-    c[3][1, 1] = temp[6][3, 3]
-    c[3][1, 2] = temp[6][3, 2]
-    c[3][1, 3] = temp[6][3, 1]
+    c[2][1, 1] = temp[6][1, 3]
+    c[2][1, 2] = temp[6][2, 3]
+    c[2][1, 3] = temp[6][3, 3]
 
-    c[6][3, 1] = temp[1][3, 1]
-    c[6][3, 2] = temp[1][3, 2]
-    c[6][3, 3] = temp[1][3, 3]
+    c[6][1, 3] = temp[4][3, 3]
+    c[6][2, 3] = temp[4][3, 2]
+    c[6][3, 3] = temp[4][3, 1]
 
     # Rotate the bottom face clockwise
-    c[4][1, 1] = temp[4][3, 1]
-    c[4][1, 2] = temp[4][2, 1]
-    c[4][1, 3] = temp[4][1, 1]
-    c[4][2, 1] = temp[4][3, 2]
-    c[4][2, 2] = temp[4][2, 2]
-    c[4][2, 3] = temp[4][1, 2]
-    c[4][3, 1] = temp[4][3, 3]
-    c[4][3, 2] = temp[4][2, 3]
-    c[4][3, 3] = temp[4][1, 3]
+    c[3][1, 1] = temp[3][3, 1]
+    c[3][1, 2] = temp[3][2, 1]
+    c[3][1, 3] = temp[3][1, 1]
+    c[3][2, 1] = temp[3][3, 2]
+    c[3][2, 2] = temp[3][2, 2]
+    c[3][2, 3] = temp[3][1, 2]
+    c[3][3, 1] = temp[3][3, 3]
+    c[3][3, 2] = temp[3][2, 3]
+    c[3][3, 3] = temp[3][1, 3]
 end
 
 function DPrime(c)
@@ -507,51 +510,156 @@ function DPrime!(c)
     temp = deepcopy(c)
 
     # Rotate the bottom column
-    c[1][3, 1] = temp[6][3, 1]
-    c[1][3, 2] = temp[6][3, 2]
-    c[1][3, 3] = temp[6][3, 3]
+    c[4][3, 1] = temp[6][3, 3]
+    c[4][3, 2] = temp[6][2, 3]
+    c[4][3, 3] = temp[6][1, 3]
 
-    c[5][3, 1] = temp[1][3, 1]
-    c[5][3, 2] = temp[1][3, 2]
-    c[5][3, 3] = temp[1][3, 3]
+    c[5][1, 1] = temp[4][3, 1]
+    c[5][2, 1] = temp[4][3, 2]
+    c[5][3, 1] = temp[4][3, 3]
 
-    c[3][1, 1] = temp[5][3, 3]
-    c[3][1, 2] = temp[5][3, 2]
-    c[3][1, 3] = temp[5][3, 1]
+    c[2][1, 1] = temp[5][3, 1]
+    c[2][1, 2] = temp[5][2, 1]
+    c[2][1, 3] = temp[5][1, 1]
 
-    c[6][3, 1] = temp[3][1, 3]
-    c[6][3, 2] = temp[3][1, 2]
-    c[6][3, 3] = temp[3][1, 1]
+    c[6][1, 3] = temp[2][1, 1]
+    c[6][2, 3] = temp[2][1, 2]
+    c[6][3, 3] = temp[2][1, 3]
 
     #Rotate the bottom face counter clockwise
-    c[4][1, 1] = temp[4][1, 3]
-    c[4][1, 2] = temp[4][2, 3]
-    c[4][1, 3] = temp[4][3, 3]
-    c[4][2, 1] = temp[4][1, 2]
-    c[4][2, 2] = temp[4][2, 2]
-    c[4][2, 3] = temp[4][3, 2]
-    c[4][3, 1] = temp[4][1, 1]
-    c[4][3, 2] = temp[4][2, 1]
-    c[4][3, 3] = temp[4][3, 1]
+    c[3][1, 1] = temp[3][1, 3]
+    c[3][1, 2] = temp[3][2, 3]
+    c[3][1, 3] = temp[3][3, 3]
+    c[3][2, 1] = temp[3][1, 2]
+    c[3][2, 2] = temp[3][2, 2]
+    c[3][2, 3] = temp[3][3, 2]
+    c[3][3, 1] = temp[3][1, 1]
+    c[3][3, 2] = temp[3][2, 1]
+    c[3][3, 3] = temp[3][3, 1]
 end
+
+function M(c)
+    temp = deepcopy(c)
+    M!(temp)
+    return temp
+end
+
+function M!(c)
+    LPrime!(c)
+    R!(c)
+
+    # temp = deepcopy(c)
+
+    # Rotate the middle column clockwise
+    # c[1][1, 2] = temp[4][1, 2]
+    # c[1][2, 2] = temp[4][2, 2]
+    # c[1][3, 2] = temp[4][3, 2]
+
+    # c[2][1, 2] = temp[1][1, 2]
+    # c[2][2, 2] = temp[1][2, 2]
+    # c[2][3, 2] = temp[1][3, 2]
+
+    # c[3][1, 2] = temp[2][1, 2]
+    # c[3][2, 2] = temp[2][2, 2]
+    # c[3][3, 2] = temp[2][3, 2]
+
+    # c[4][1, 2] = temp[3][1, 2]
+    # c[4][2, 2] = temp[3][2, 2]
+    # c[4][3, 2] = temp[3][3, 2]
+end
+
+function MPrime(c)
+    temp = deepcopy(c)
+    MPrime!(temp)
+    return temp
+end
+
+function MPrime!(c)
+    L!(c)
+    RPrime!(c)
+
+    # temp = deepcopy(c)
+
+    # Rotate the middle column counter-clockwise
+    # c[1][1, 2] = temp[2][1, 2]
+    # c[1][2, 2] = temp[2][2, 2]
+    # c[1][3, 2] = temp[2][3, 2]
+
+    # c[2][1, 2] = temp[3][1, 2]
+    # c[2][2, 2] = temp[3][2, 2]
+    # c[2][3, 2] = temp[3][3, 2]
+
+    # c[3][1, 2] = temp[4][1, 2]
+    # c[3][2, 2] = temp[4][2, 2]
+    # c[3][3, 2] = temp[4][3, 2]
+
+    # c[4][1, 2] = temp[1][1, 2]
+    # c[4][2, 2] = temp[1][2, 2]
+    # c[4][3, 2] = temp[1][3, 2]
+end
+
+function E(c)
+    temp = deepcopy(c)
+    E!(temp)
+    return temp
+end
+
+function E!(c)
+    U!(c)
+    DPrime!(c)
+end
+
+function EPrime(c)
+    temp = deepcopy(c)
+    EPrime!(temp)
+    return temp
+end
+
+function EPrime!(c)
+    UPrime!(c)
+    D!(c)
+end
+
+function S(c)
+    temp = deepcopy(c)
+    S!(temp)
+    return temp
+end
+
+function S!(c)
+    FPrime!(c)
+    B!(c)
+end
+
+function SPrime(c)
+    temp = deepcopy(c)
+    SPrime!(temp)
+    return temp
+end
+
+function SPrime!(c)
+    F!(c)
+    BPrime!(c)
+end
+
 
 directionMapping = Dict{String, Function}(
     "L"  => L,
     "L`" => LPrime,
     "R"  => R,
     "R`" => RPrime,
-    # "M"  => M,
-    # "M`" => MPrime,
+    "M"  => M,
+    "M`" => MPrime,
     "U"  => U,
     "U`" => UPrime,
-    # "E"  => E,
-    # "E`" => EPrime,
+    "E"  => E,
+    "E`" => EPrime,
     "D"  => D,
     "D`" => DPrime,
     "F"  => F,
     "F`" => FPrime,
-    # "C"  => C,
-    # "C`" => CPrime,
+    "S"  => S,
+    "S`" => SPrime,
     "B"  => B,
     "B`" => BPrime
 )
@@ -574,6 +682,11 @@ function percentSolved(c)
     return trunc(Int, (r / 54) * 100)
 end
 
+function mixCube(c, moves)
+    temp = deepcopy(c)
+    mixCube!(temp, moves)
+    return temp
+end
 
 function mixCube!(c, moves)
     for i in 1:moves
