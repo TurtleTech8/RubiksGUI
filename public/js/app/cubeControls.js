@@ -8,17 +8,42 @@ colorCSSSelector = {
 }
 
 $(document).ready(function () {
-
+    // Make sure the cube is ready for use
     resetCube()
 
+    // Add click events for each directional button
+    $("#directions").children().click(turnCube)
+
+    // Add hover events for each direction button
+    $("#directions").children().each(function(i) {
+        $(this).hover(showDirectionIndicator, hideDirectionIndicator)
+    })
+
+    // Add Reset and Scramble click events
+    $("#resetCube").click(resetCube)
+    $("#scrambleCube").click(mixCube)
 })
 
+function showDirectionIndicator() {
+    x = $(`#${this.getAttribute('data-face')}`).children(".directionIndicator")
+    x.removeClass("hide")
+    if(this.id.includes("Prime")) {
+        x.addClass("mirror")
+    }
+}
 
-function turnCube(e) {
+function hideDirectionIndicator() {
+    x = $(`#${this.getAttribute('data-face')}`).children(".directionIndicator")
+    x.addClass("hide")
+    x.removeClass("mirror")
+}
+
+
+function turnCube() {
     $.ajax({
         url : 'cube/turnCube',
         type : 'POST',
-        data : {direction: e.innerHTML},
+        data : {direction: this.innerHTML},
         success : function(data) {
             console.log(data)
             cube = data.response
@@ -91,7 +116,7 @@ function fillSide(side, faces) {
         faceElement = $(`[id=${side}${idSelector}][data-face]`)
         oldColorSelector = Math.floor(faceElement.attr("data-face") / 10)
         faceElement.attr("data-face", faces[x])
-        faceElement.text(faces[x])
+        // faceElement.text(faces[x])
         faceElement.removeClass(colorCSSSelector[oldColorSelector]).addClass(colorCSSSelector[colorSelector])
         // console.log(faceElement)
     }
